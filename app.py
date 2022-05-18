@@ -1,12 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-from re import sub
-def snake_case(s):
-    return '_'.join(
-        sub('([A-Z][a-z]+)', r' \1',
-        sub('([A-Z]+)', r' \1',
-        s.replace('-', ' '))).split()).lower()
+import utils as u
 
 import src.home
 # import src.statistics
@@ -45,15 +40,18 @@ def main():
 
 @st.cache(allow_output_mutation=True)
 def get_data():
-	df = pd.read_csv("data/ATADS Airport Operations Report (SEA, PAE, MWH)_fix_cleaned.csv", header=7)
+	# df = pd.read_csv("data/ATADS Airport Operations Report (SEA, PAE, MWH)_fix_cleaned.csv", header=7)
+	df = pd.read_excel("data/WEB-Report-90921.xlsx", header=7, skipfooter=5)
+	df_key = pd.read_csv("data/key.csv", index_col="column_name")
+	df.columns = df_key.index
 	
-	df.columns = [snake_case(col) for col in df.columns]
+	df.columns = [u.snake_case(col) for col in df.columns]
+	df = df[~(df["date"].str.contains("Sub-Total").fillna(False))] #remove daily sub-totals from the records
 	df["date"] = pd.to_datetime(df["date"])#.dt.date
 	df = df.set_index(["date", "facility"])
 	
-	# df_key = pd.read_csv("data/..._key.csv", index_col="column")
-	
-	return df#, df_key
+	# return df#, df_key
+	return df, df_key
 
 if __name__ == "__main__":
 	main()
