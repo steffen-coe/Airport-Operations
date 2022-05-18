@@ -6,8 +6,6 @@ A Python-based application utilizing Streamlit to provide structured, interactiv
 
 The Python implementation is available at <https://github.com/steffen-coe/Airport-Operations>. It is available under an [MIT License](LICENSE).
 
-<> Data is taken from the FAA's Operations Network (OPSNET), available at <https://aspm.faa.gov/opsnet/sys/Airport.asp>.
-
 Data is taken from the following sources:
 + [FAA's Operations Network (OPSNET)](https://aspm.faa.gov/opsnet/sys/Airport.asp), reporting counts of airport operations as recorded by the Air Traffic Activity System (ATADS)
   * Can be aggregated by day, month, or year
