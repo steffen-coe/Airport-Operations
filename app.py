@@ -48,6 +48,9 @@ def get_data():
 	df.columns = [u.snake_case(col) for col in df.columns]
 	df = df[~(df["date"].str.contains("Sub-Total").fillna(False))] #remove daily sub-totals from the records
 	df["date"] = pd.to_datetime(df["date"])#.dt.date
+	st.write(df.head())
+	df = df.sort_values("facility")
+	st.write(df.head())
 	df = df.set_index(["date", "facility"])
 	
 	# return df#, df_key

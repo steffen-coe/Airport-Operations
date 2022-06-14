@@ -14,7 +14,7 @@
 3. Generate and download report (`.xls`) by clicking *Run*.
 4. Open the downloaded file (looks like `WEB-Report-68629.xls`) in Excel and change the date column's format into YYYY-MM-DD, then save the file as a `.xlsx` in this repository's `data` folder.
 
-## FAA's Terminal Area Forecast data
+## FAA's Terminal Area Forecast (TAF) data
 
 (yearly data (past) and forecasts (future))
 

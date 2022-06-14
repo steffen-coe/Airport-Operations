@@ -3,15 +3,18 @@ import pandas as pd
 import plotly.graph_objects as go
 
 def write(data):
-	# df = data
 	df, df_key = data
+	
+	#save data as csv
+	# df.to_csv("data/aggregations/data_OPSNET.csv")
+	
 	# categories = {"itin_carrier" : "Itinerant Air Carrier", "itin_taxi" : "Itinerant Air Taxi", "itin_ga" : "Itinerant General Aviation", "itin_military" : "Itinerant Military", "lcl_civil" : "Local Civil", "lcl_miltary" : "Local Military"}
 	categories = [col for col in df.columns if "total" not in col]
 	
 	st.title("Operations at PAE and MWH Airports 🛩️🌎")
 	
 	st.write("Explore the number of operations (take-offs and landings) at each of the following three airports. Have fun! 💡")
-	st.write("+ Grant County (Moses Lake) Airport (MWH)\n + Paine Field/Snohomish County Airport (PAE)\n + Seattle-Tacoma International Airport (SEA)")
+	st.write("+ Grant County International Airport (MWH), at Moses Lake\n + Paine Field/Snohomish County Airport (PAE)\n + Seattle-Tacoma International Airport (SEA)")
 	
 	fac = st.selectbox("Airport:", df.index.levels[1].to_list())
 	
@@ -42,6 +45,9 @@ def write(data):
 		df_TAF = df_TAF.rename(rename_dict, axis=1)
 		df_TAF["facility"] = df_TAF["facility"].str.replace(" ", "")
 		df_TAF = df_TAF.set_index(["date", "facility"])
+		
+		#save data as csv
+		# df_TAF.to_csv("data/aggregations/data_TAF.csv")
 		
 		#select data only for the selected airport (facility)
 		df_fac = df_TAF.loc[(slice(None), fac), :]
@@ -114,6 +120,8 @@ def write(data):
 		df_fac_byY.index = [pd.to_datetime("%d-01-01"%(datetime.year)) for datetime in df_fac_byY.index]
 		dff = df_fac_byY
 		fig.update_layout(xaxis=dict(tickformat = "%Y", dtick="M12"))
+	
+	# dff.to_csv("data/aggregations/data_%s_by%s_from%s.csv"%(fac,aggregation,data_source))
 	
 	if chart == "By category":
 		# for cat in categories.keys():
